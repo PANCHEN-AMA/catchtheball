@@ -54,8 +54,8 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     gluOrtho2D(0.0, width_gl, 0.0, height_gl);
     
     glRasterPos2i(0, height_gl - 1);
-    glDrawPixels(width_gl, height_gl, GL_BGR, GL_UNSIGNED_BYTE, background);  // for Mac OSX
-    // glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, background);  // for Windows
+    // glDrawPixels(width_gl, height_gl, GL_BGR, GL_UNSIGNED_BYTE, background);  // for Mac OSX
+    glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, background);  // for Windows
     
     glPopMatrix();
     glLoadIdentity();
