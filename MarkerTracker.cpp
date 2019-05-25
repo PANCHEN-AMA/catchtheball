@@ -89,10 +89,10 @@ void ConvertMatrixCV2GL(float* matrix, float* matrix_gl){
  * computes the pose of AR markers with specific code number
  * @param matrices result of AR marker poses at a openGL coordinate system.
  * @param img_bgr sorce image from camera.
- * @param codes the codes of AR marker.
+ * @param codes_forDetect the codes of AR marker.
  * @param codes_count the length of the "codes".
  */
-void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes[], const int codes_count){
+void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes_forDetect[], const int codes_count){
     bool isClosed = true;
     int thickness = 4;
     
@@ -101,7 +101,7 @@ void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes[], const in
     
     cv::cvtColor( img_bgr, img_gray, cv::COLOR_BGR2GRAY);
     
-    //cv::threshold( img_gray, img_filtered, 50, 255, cv::THRESH_BINARY);
+    // cv::threshold( img_gray, img_filtered, 100, 255, cv::THRESH_BINARY);
     cv::adaptiveThreshold(img_gray, img_filtered, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 33, 5);
     
     std::vector< std::vector<cv::Point> > contours;
@@ -291,9 +291,9 @@ void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes[], const in
         inputPoints[1] = corners_src[(1 + direction) % 4] - offset;
         inputPoints[2] = corners_src[(2 + direction) % 4] - offset;
         inputPoints[3] = corners_src[(3 + direction) % 4] - offset;
-        
+
         for(int code_index = 0; code_index < codes_count; code_index++){
-            if(code == codes[code_index]){
+            if(code == codes_forDetect[code_index]){
                 float newMat_cv[16];
                 estimateSquarePose(newMat_cv, inputPoints, markerSize);
                 ConvertMatrixCV2GL(newMat_cv, matrices[code_index]);

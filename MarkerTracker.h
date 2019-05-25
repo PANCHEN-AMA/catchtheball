@@ -14,7 +14,7 @@ const int markerAreaMax = 100000000;
  * computes the pose of AR markers with specific code number
  * @param matrices result of AR marker poses at a openGL coordinate system.
  * @param img_bgr sorce image from camera.
- * @param codes the codes of AR marker.
+ * @param codes_forDetect the codes of AR marker.
  * @param codes_count the length of the "codes".
  */
-void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes[], const int codes_count);
+void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes_forDetect[], const int codes_count);
