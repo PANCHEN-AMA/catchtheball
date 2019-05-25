@@ -8,3 +8,6 @@ You can track new AR marker changing these data. However, you have to change "Di
 
 ## DisplayGLImage.cpp
 If you use Mac OSX, you have to comment out the line 58 ,and remove comment out of the line 57.
+
+## plotstar.cpp
+just modify display() part.
