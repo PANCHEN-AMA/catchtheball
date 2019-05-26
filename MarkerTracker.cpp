@@ -55,28 +55,22 @@ float* filterStripe(cv::Mat src, int stripe_width){
 
 /* Convert projection matrix
  * as to change coordinate system from openCV to openGL */
-void ConvertMatrixCV2GL(float* matrix, float* matrix_gl){
-    /* multipy
-     * |  1 -1  1  1 |
-     * | -1  1 -1 -1 |
-     * |  1 -1  1  1 | (the index of -1 : 1, 4, 6, 7, 9)
-     * |  1  1  1  1 |
-     * and Transposed*/
-    
+void ConvertMatrixCV2GL(float* matrix, float* matrix_gl, int width, int height){
+    /* Transpose */
     matrix_gl[0] = matrix[0];
-    matrix_gl[1] = -matrix[4];
+    matrix_gl[1] = matrix[4];
     matrix_gl[2] = matrix[8];
     matrix_gl[3] = matrix[12];
-    matrix_gl[4] = -matrix[1];
+    matrix_gl[4] = matrix[1];
     matrix_gl[5] = matrix[5];
-    matrix_gl[6] = -matrix[9];
+    matrix_gl[6] = matrix[9];
     matrix_gl[7] = matrix[13];
     matrix_gl[8] = matrix[2];
-    matrix_gl[9] = -matrix[6];
+    matrix_gl[9] = matrix[6];
     matrix_gl[10] = matrix[10];
     matrix_gl[11] = matrix[14];
     matrix_gl[12] = matrix[3];
-    matrix_gl[13] = -matrix[7];
+    matrix_gl[13] = matrix[7];
     matrix_gl[14] = matrix[11];
     matrix_gl[15] = matrix[15];
     // std::cout << matrix_gl[0] << "," <<  matrix_gl[1] << "," << matrix_gl[2] << "," << matrix_gl[3] << std::endl;
@@ -222,10 +216,10 @@ void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes_forDetect[]
         // const int bw_thresh = 100;
         // cv::threshold(marker, marker_filtered, bw_thresh, 255, cv::THRESH_BINARY);
         cv::adaptiveThreshold(marker, marker_filtered, 255, cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY, 3, 0);
-        
+
         // check if border is black
         int code = 0;
-        for (int i = 0; i < 6; ++i){
+        for (int i = 1; i < 5; ++i){
             int pixel1 = marker_filtered.at<uchar>(0,i);
             int pixel2 = marker_filtered.at<uchar>(5,i);
             int pixel3 = marker_filtered.at<uchar>(i,0);
@@ -287,16 +281,21 @@ void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes_forDetect[]
         cv::Point2f inputPoints[4];
         cv::Point2f offset(img_bgr.cols / 2.0 - 0.5, img_bgr.rows / 2.0 - 0.5);
         
-        inputPoints[0] = corners_src[direction] - offset;
-        inputPoints[1] = corners_src[(1 + direction) % 4] - offset;
-        inputPoints[2] = corners_src[(2 + direction) % 4] - offset;
-        inputPoints[3] = corners_src[(3 + direction) % 4] - offset;
-
+        inputPoints[0] = corners_src[(direction + 3) % 4] - offset;
+        inputPoints[0].y = -inputPoints[0].y;
+        inputPoints[1] = corners_src[(direction + 2) % 4] - offset;
+        inputPoints[1].y = -inputPoints[1].y;
+        inputPoints[2] = corners_src[(direction + 1) % 4] - offset;
+        inputPoints[2].y = -inputPoints[2].y;
+        inputPoints[3] = corners_src[direction] - offset;
+        inputPoints[3].y = -inputPoints[3].y;
+        
+        cv::resize(marker_filtered, marker_filtered, cv::Size(100, 100), cv::INTER_NEAREST);
         for(int code_index = 0; code_index < codes_count; code_index++){
             if(code == codes_forDetect[code_index]){
                 float newMat_cv[16];
                 estimateSquarePose(newMat_cv, inputPoints, markerSize);
-                ConvertMatrixCV2GL(newMat_cv, matrices[code_index]);
+                ConvertMatrixCV2GL(newMat_cv, matrices[code_index], img_bgr.size().width, img_bgr.size().height);
             }
         }
     }
