@@ -91,3 +91,102 @@ void drawSnowman( bool female )
 	solidCone( 0.1, 0.3, 10, 10 );
 }
 // Added in Exercise 9 - End *****************************************************************
+
+// Cube Vertex
+static const GLdouble aCubeVertex[][3] = {
+	{ 0.0, 0.0, 0.0 },
+	{ 1.0, 0.0, 0.0 },
+	{ 1.0, 1.0, 0.0 },
+	{ 0.0, 1.0, 0.0 },
+	{ 0.0, 0.0, 1.0 },
+	{ 1.0, 0.0, 1.0 },
+	{ 1.0, 1.0, 1.0 },
+	{ 0.0, 1.0, 1.0 }
+};
+// Cube Face
+static const int aCubeFace[][4] = {
+	{ 0, 1, 2, 3 },
+	{ 1, 5, 6, 2 },
+	{ 5, 4, 7, 6 },
+	{ 4, 0, 3, 7 },
+	{ 4, 5, 1, 0 },
+	{ 3, 2, 6, 7 }
+};
+// Cube Normal
+static const GLdouble aCubeNormal[][3] = {
+  { 0.0, 0.0,-1.0 },
+  { 1.0, 0.0, 0.0 },
+  { 0.0, 0.0, 1.0 },
+  {-1.0, 0.0, 0.0 },
+  { 0.0,-1.0, 0.0 },
+  { 0.0, 1.0, 0.0 }
+};
+//Cube Material
+static const GLfloat aCube0Material[] = { 0.8, 0.2, 0.2, 1.0 };
+static const GLfloat aCube1Material[] = { 0.2, 0.2, 0.8, 1.0 };
+
+static void drawCube(const GLfloat material[])
+{
+	// param
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, material);
+
+	glBegin(GL_QUADS);
+	for (size_t i = 0; i < 6; ++i)
+	{
+		glNormal3dv(aCubeNormal[i]);
+		for (size_t j = 0; j < 4; ++j)
+		{
+			glVertex3dv(aCubeVertex[aCubeFace[i][j]]);
+		}
+	}
+	glEnd();
+}
+
+void drawField() {
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+
+	// Side1
+	glPushMatrix();
+	glColor4f(1.0, 0.0, 0.0, 1.0);
+	glScaled(0.2, 0.2, 5.0);
+	drawCube(aCube0Material);
+	glPopMatrix();
+
+	// Side2
+	glPushMatrix();
+	glColor4f(1.0, 0.0, 0.0, 1.0);
+	glRotated(90, 0.0, 1.0, 0.0);
+	glScaled(0.2, 0.2, 5.0);
+	drawCube(aCube0Material);
+	glPopMatrix();
+
+	// Side3
+	glPushMatrix();
+	glColor4f(1.0, 0.0, 0.0, 1.0);
+	glTranslated(0.0, 0.0, 5.0);
+	glRotated(90, 0.0, 1.0, 0.0);
+	glScaled(0.2, 0.2, 5.0);
+	drawCube(aCube0Material);
+	glPopMatrix();
+
+	// Side4
+	glPushMatrix();
+	glColor4f(1.0, 0.0, 0.0, 1.0);
+	glTranslated(4.9, 0.0, 2.3);
+	glScaled(0.2, 0.2, 5.0);
+	glTranslated(-0.5, 0.0, -0.5);
+	drawCube(aCube0Material);
+	glPopMatrix();
+
+	// Bottom
+	glPushMatrix();
+	glColor4f(0.0, 0.0, 1.0, 1.0);
+	glScaled(5.0, 0.1, 5.0);
+	glTranslated(0.0, -1.0, 0.0);
+	drawCube(aCube1Material);
+	glPopMatrix();
+
+	glPopMatrix();
+
+}

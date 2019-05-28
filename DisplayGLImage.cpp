@@ -38,7 +38,9 @@ void initGL(){
  */
 void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][16], int codes_count, int width_gl, int height_gl){
     glfwGetFramebufferSize(window, &width_gl, &height_gl);
-    unsigned char background[width_gl * height_gl * 3];
+    //unsigned char background[width_gl * height_gl * 3];
+    unsigned char *background;
+	background = new unsigned char[width_gl * height_gl * 3];
 
     memcpy(background, img_bgr.data, sizeof(background));
     
@@ -55,7 +57,7 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     
     glRasterPos2i(0, height_gl - 1);
     // glDrawPixels(width_gl, height_gl, GL_BGR, GL_UNSIGNED_BYTE, background);  // for Mac OSX
-    glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, background);  // for Windows
+    glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, img_bgr);  // for Windows
     
     glPopMatrix();
     glLoadIdentity();
@@ -77,6 +79,7 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
         drawSphere(1, 10, 10);
         glPopMatrix();
     }
+    delete[] background;
     
     
 }
