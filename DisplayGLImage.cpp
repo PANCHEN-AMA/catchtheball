@@ -68,6 +68,16 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     /* rendering openGL ----------------------------------------- */
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    if (poseMatrices[1] != NULL) {
+		glPushMatrix();
+		glLoadMatrixf(poseMatrices[1]);
+		glScalef(0.05f, 0.05f, 0.05f);
+
+		// Draw field
+		drawField();
+		glPopMatrix();
+	}
     
     if(poseMatrices[0] != NULL){
         glPushMatrix();
