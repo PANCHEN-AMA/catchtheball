@@ -38,11 +38,6 @@ void initGL(){
  */
 void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][16], int codes_count, int width_gl, int height_gl){
     glfwGetFramebufferSize(window, &width_gl, &height_gl);
-    //unsigned char background[width_gl * height_gl * 3];
-    unsigned char *background;
-	background = new unsigned char[width_gl * height_gl * 3];
-
-    memcpy(background, img_bgr.data, sizeof(background));
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -88,8 +83,6 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
         glColor4f(1.0, 0.0, 0.0, 1.0);
         drawSphere(1, 10, 10);
         glPopMatrix();
-    }
-    delete[] background;
-    
+    }    
     
 }
