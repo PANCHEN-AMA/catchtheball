@@ -144,46 +144,44 @@ static void drawCube(const GLfloat material[])
 
 void drawField() {
 	glPushMatrix();
-	glRotatef(90, 1, 0, 0);
 
 	// Side1
 	glPushMatrix();
 	glColor4f(1.0, 0.0, 0.0, 1.0);
-	glScaled(0.2, 0.2, 5.0);
+	glScaled(5.0, 0.2, 0.2);
 	drawCube(aCube0Material);
 	glPopMatrix();
 
 	// Side2
 	glPushMatrix();
 	glColor4f(1.0, 0.0, 0.0, 1.0);
-	glRotated(90, 0.0, 1.0, 0.0);
-	glScaled(0.2, 0.2, 5.0);
+	glRotated(90, 0.0, 0.0, 1.0);
+	glScaled(5.0, 0.2, 0.2);
 	drawCube(aCube0Material);
 	glPopMatrix();
 
 	// Side3
 	glPushMatrix();
 	glColor4f(1.0, 0.0, 0.0, 1.0);
-	glTranslated(0.0, 0.0, 5.0);
-	glRotated(90, 0.0, 1.0, 0.0);
-	glScaled(0.2, 0.2, 5.0);
+	glTranslated(5.0, 0.0, 0.0);
+	glRotated(90, 0.0, 0.0, 1.0);
+	glScaled(5.0, 0.2, 0.2);
 	drawCube(aCube0Material);
 	glPopMatrix();
 
 	// Side4
 	glPushMatrix();
 	glColor4f(1.0, 0.0, 0.0, 1.0);
-	glTranslated(4.9, 0.0, 2.3);
-	glScaled(0.2, 0.2, 5.0);
-	glTranslated(-0.5, 0.0, -0.5);
+	glTranslated(0.0, 5.0, 0.0);
+	glScaled(5.0, 0.2, 0.2);
 	drawCube(aCube0Material);
 	glPopMatrix();
 
 	// Bottom
 	glPushMatrix();
 	glColor4f(0.0, 0.0, 1.0, 1.0);
-	glScaled(5.0, 0.1, 5.0);
-	glTranslated(0.0, -1.0, 0.0);
+	glScaled(5.0, 5.0, 0.1);
+	glTranslated(0.0, 0.0, -1.0);
 	drawCube(aCube1Material);
 	glPopMatrix();
 
