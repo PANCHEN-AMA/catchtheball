@@ -6,7 +6,7 @@
 
 const float markerSize = 0.048182f;     // real marker size (m)
 
-const int markerAreaMin = 10000;
+const int markerAreaMin = 5000;
 const int markerAreaMax = 100000000;
 
 

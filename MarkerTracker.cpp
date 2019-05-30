@@ -279,18 +279,17 @@ void GetPoses(float matrices[][16], cv::Mat img_bgr, const int codes_forDetect[]
         }
         
         cv::Point2f inputPoints[4];
-        cv::Point2f offset(img_bgr.cols / 2.0 - 0.5, img_bgr.rows / 2.0 - 0.5);
+        cv::Point2f offset(img_bgr.cols / 2.0, img_bgr.rows / 2.0);
         
-        inputPoints[0] = corners_src[(direction + 3) % 4] - offset;
+        inputPoints[0] = corners_src[(7 - direction) % 4] - offset;
         inputPoints[0].y = -inputPoints[0].y;
-        inputPoints[1] = corners_src[(direction + 2) % 4] - offset;
+        inputPoints[1] = corners_src[(6 - direction) % 4] - offset;
         inputPoints[1].y = -inputPoints[1].y;
-        inputPoints[2] = corners_src[(direction + 1) % 4] - offset;
+        inputPoints[2] = corners_src[(5 - direction) % 4] - offset;
         inputPoints[2].y = -inputPoints[2].y;
-        inputPoints[3] = corners_src[direction] - offset;
+        inputPoints[3] = corners_src[(4 - direction) % 4] - offset;
         inputPoints[3].y = -inputPoints[3].y;
         
-        cv::resize(marker_filtered, marker_filtered, cv::Size(100, 100), cv::INTER_NEAREST);
         for(int code_index = 0; code_index < codes_count; code_index++){
             if(code == codes_forDetect[code_index]){
                 float newMat_cv[16];

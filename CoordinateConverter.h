@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp> /// include most of core headers
 #include <opencv2/core.hpp> /// include most of core headers
 
-const int field_length = 0.25;
+const float field_length = 0.25;
 
 /**
  * convert model coordinate system to game coordinate system

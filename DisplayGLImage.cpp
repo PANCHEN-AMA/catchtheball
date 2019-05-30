@@ -51,8 +51,8 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     gluOrtho2D(0.0, width_gl, 0.0, height_gl);
     
     glRasterPos2i(0, height_gl - 1);
-    // glDrawPixels(width_gl, height_gl, GL_BGR, GL_UNSIGNED_BYTE, background);  // for Mac OSX
-    glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, img_bgr);  // for Windows
+    // glDrawPixels(width_gl, height_gl, GL_BGR, GL_UNSIGNED_BYTE, img_bgr.data);  // for Mac OSX
+    glDrawPixels(width_gl, height_gl, GL_BGR_EXT, GL_UNSIGNED_BYTE, img_bgr.data);  // for Windows
     
     glPopMatrix();
     glLoadIdentity();
@@ -63,16 +63,16 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     /* rendering openGL ----------------------------------------- */
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+    
     if (poseMatrices[1] != NULL) {
-		glPushMatrix();
-		glLoadMatrixf(poseMatrices[1]);
-		glScalef(0.05f, 0.05f, 0.05f);
-
-		// Draw field
-		drawField();
-		glPopMatrix();
-	}
+        glPushMatrix();
+        glLoadMatrixf(poseMatrices[1]);
+        glScalef(0.05f, 0.05f, 0.05f);
+        
+        // Draw field
+        drawField();
+        glPopMatrix();
+    }
     
     if(poseMatrices[0] != NULL){
         glPushMatrix();
@@ -83,6 +83,6 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
         glColor4f(1.0, 0.0, 0.0, 1.0);
         drawSphere(1, 10, 10);
         glPopMatrix();
-    }    
+    }
     
 }
