@@ -188,3 +188,42 @@ void drawField() {
 	glPopMatrix();
 
 }
+
+static void drawCylinder(double rad, double len, int axis, int slices)
+{
+	GLUquadricObj *qobj;
+	qobj = gluNewQuadric();
+
+	glPushMatrix();
+	switch (axis) {
+	case 0:
+		glRotatef(-90.0, 0.0, 1.0, 0.0);
+		glTranslatef(0.0, 0.0, -0.5*len);
+		break;
+	case 1:
+		glRotatef(-90.0, 1.0, 0.0, 0.0);
+		glTranslatef(0.0, 0.0, -0.5*len);
+		break;
+	case 2:
+		glTranslatef(0.0, 0.0, -0.5*len);
+		break;
+	default:
+		glTranslatef(0.0, 0.0, -0.5*len);
+	}
+
+	gluQuadricDrawStyle(qobj, GLU_FILL);
+	gluQuadricNormals(qobj, GLU_SMOOTH);
+	gluCylinder(qobj, rad, rad, len, slices, slices);
+
+	glPushMatrix();
+	glRotatef(180.0, 1.0, 0.0, 0.0);
+	gluDisk(qobj, 0.0, rad, slices, slices);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.0, 0.0, len);
+	gluDisk(qobj, 0.0, rad, slices, slices);
+	glPopMatrix();
+
+	glPopMatrix();
+}

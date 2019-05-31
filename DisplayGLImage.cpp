@@ -77,11 +77,11 @@ void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][1
     if(poseMatrices[0] != NULL){
         glPushMatrix();
         glLoadMatrixf(poseMatrices[0]);
-        glScalef(0.01f, 0.01f, 0.01f);
+        glScalef(0.05f, 0.05f, 0.05f);
         
-        // Draw ball
-        glColor4f(1.0, 0.0, 0.0, 1.0);
-        drawSphere(1, 10, 10);
+        // Draw cylinder
+		glColor4f(0.0, 1.0, 1.0, 1.0);
+		drawCylinder(0.5, 0.1, 2, 10);
         glPopMatrix();
     }
     
