@@ -19,4 +19,6 @@ void initGL();
  * @param window displaying window
  * @param img_bgr background image from camera.
  */
-void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][16], int codes_count, int width_gl, int height_gl);
+void display (GLFWwindow* window, const cv::Mat &img_bgr, float poseMatrices[][16], int codes_count, int width_gl, int height_gl, int& starnum);
+
+void InitBall();
