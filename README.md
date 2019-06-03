@@ -1,5 +1,9 @@
 # catchtheball
 
+## Usage
+This game has 3 modes. Use up-arrow and down-arrow on keyboard to change mode.
+Use SHIFT key to restart the game.
+
 ## main.cpp
 - codes : Tracking AR marker codes. You can change the length using "codes_count".
 - poseMatrices : poseMatrices are saved in this array. "poseMatrices[n]" is corresponding to the marker of "codes[n]".
