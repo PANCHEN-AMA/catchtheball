@@ -29,6 +29,9 @@ void initGL(){
     // enable and set depth parameters
     glEnable( GL_DEPTH_TEST );
     glClearDepth( 1.0 );
+
+	// enable texture
+	glEnable(GL_TEXTURE_2D);
     
     // light parameters
     GLfloat light_pos[] = {1.0, 1.0, 1.0, 0.0};
